@@ -430,54 +430,27 @@ function animateHearts(){
 animateHearts();
 
 /* ══════════════════════════════
-   PHOTO GALLERIES — NOW DYNAMIC! 🎉
+   PHOTO GALLERIES
 ══════════════════════════════ */
-let PHOTOS = [];
+const PHOTOS = [
+   'images/IMG_0815_1024x768.jpg','images/IMG_0807_1024x768.jpg','images/IMG_0806_1024x768.jpg',
+  'images/IMG_0812_1024x768.jpg','images/IMG_0818_1024x768.JPG','images/IMG_0822_1024x768.JPG',
+ 'images/IMG-20260117-WA0001 (4) (1).jpg','images/IMG_0823_1024x768.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG_0825_1024x768.jpg','images/IMG_20260121_220935_121.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG-20260117-WA0001 (4) (1).jpg','images/IMG_0823_1024x768.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG_0825_1024x768.jpg','images/IMG_20260121_220935_121.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG-20260117-WA0001 (4) (1).jpg','images/IMG_0823_1024x768.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG_0825_1024x768.jpg','images/IMG_20260121_220935_121.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG-20260117-WA0001 (4) (1).jpg','images/IMG_0823_1024x768.JPG','images/IMG_0824_1024x768.JPG',
+   'images/IMG_0825_1024x768.jpg','images/IMG_20260121_220935_121.JPG','images/IMG_0824_1024x768.JPG',
 
-// Load images dynamically from the images folder
-async function loadImages() {
-  try {
-    const response = await fetch('images/');
-    const html = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    
-    // Extract image files from directory listing
-    const links = doc.querySelectorAll('a');
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-    
-    links.forEach(link => {
-      const href = link.getAttribute('href');
-      if (href && imageExtensions.some(ext => href.toLowerCase().endsWith(ext))) {
-        PHOTOS.push('images/' + href);
-      }
-    });
-    
-    // If no images found, fallback to showing placeholder
-    if (PHOTOS.length === 0) {
-      console.warn('No images found in images folder');
-    }
-    
-    // Build the gallery tracks after loading images
-    buildTrack('track-left', false);
-    buildTrack('track-right', true);
-  } catch (error) {
-    console.error('Error loading images:', error);
-    // Fallback: still build tracks even if loading fails
-    buildTrack('track-left', false);
-    buildTrack('track-right', true);
-  }
-}
+  
+];
 
 function buildTrack(trackId, reverse){
   const trackEl = document.getElementById(trackId);
-  
-  // Clear existing content
-  trackEl.innerHTML = '';
-  
   // Double the list for seamless loop
-  const photoList = PHOTOS.length > 0 ? PHOTOS : ['images/placeholder.jpg'];
-  [...photoList, ...photoList].forEach(src => {
+  [...PHOTOS, ...PHOTOS].forEach(src => {
     const img = document.createElement('img');
     img.className = 'gallery-photo';
     img.src = src;
@@ -504,8 +477,8 @@ function buildTrack(trackId, reverse){
   }, 600);
 }
 
-// Initialize galleries by loading images first
-loadImages();
+buildTrack('track-left',  false);
+buildTrack('track-right', true);
 </script>
 </body>
 </html>
